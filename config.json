@@ -1,8 +1,8 @@
 {
     "website": {
         "domain": "example.com",
-        "product_url": "/examplepage",
-        "checkout_url": "/examplepage",
+        "product_url": "examplepage",
+        "checkout_url": "examplepage",
         "country": "XX",
         "email": "email@example.com",
         "phone": "+TELEPHONENUMBER",
