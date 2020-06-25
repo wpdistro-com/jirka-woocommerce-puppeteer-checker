@@ -2,13 +2,13 @@ const puppeteer = require('puppeteer');
 const Imap = require('imap');
 var conf = {
     website: {
-        domain: "",
-        additional: "",
-        checkout: ""
+        domain: "example.com",
+        product_url: "/examplepage",
+        checkout_url: "/examplepage"
     },
-    country: "CZ",
-    email: "EMAIL",
-    phone: "PHONE",
+    country: "XX",
+    email: "email@example.com",
+    phone: "+TELEPHONENUMBER",
     first_name: "Test",
     last_name: "Test",
     address: "Test",
@@ -18,11 +18,14 @@ var conf = {
 
 function mailCheckingFunction() {
     var imap = new Imap({
-        user: 'EMAIL',
+        user: 'email@example.com',
         password: 'PASSWORD',
-        host: 'HOST',
+        host: 'example.com',
         port: 993,
         tls: true,
+        tlsOptions: {
+            rejectUnauthorized: false
+        }
     });
     imap.once('ready', function() {
         imap.openBox('INBOX', false, function(err, box) {
@@ -58,12 +61,14 @@ function mailCheckingFunction() {
 (async () => {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    await page.goto(`https://${conf.website.domain}/${conf.website.additional}`);
+    await page.goto(`https://${conf.website.domain}/${conf.website.product_url}`);
     let element = await page.$$("*[class*=add_to_cart]");
     await element[0].click()
     await page.waitFor(1000);
-    await page.goto(`https://${conf.website.domain}/${conf.website.checkout}`);
-    if (page.$$("#billing_country").tagName == "select") await page.select('#billing_country', conf.country);
+    await page.goto(`https://${conf.website.domain}/${conf.website.checkout_url}`);
+    let country = await page.$("#billing_country");
+    country = await (await country.getProperty('tagName')).jsonValue();
+    if (country.toLowerCase() == "select") await page.select('#billing_country', conf.country);
     await page.focus("#billing_phone");
     await page.keyboard.type(conf.phone);
     await page.focus("#billing_email");
