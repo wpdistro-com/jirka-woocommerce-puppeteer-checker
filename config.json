@@ -1,0 +1,43 @@
+{
+    "website": {
+        "domain": "example.com",
+        "product_url": "/examplepage",
+        "checkout_url": "/examplepage",
+        "country": "XX",
+        "email": "email@example.com",
+        "phone": "+TELEPHONENUMBER",
+        "first_name": "Test",
+        "last_name": "Test",
+        "address": "Test",
+        "city": "Test",
+        "postcode": "10000"
+    },
+    "emailToCheck": {
+        "user": "email@example.com",
+        "password": "PASSWORD",
+        "host": "example.com",
+        "port": 993,
+        "tls": true,
+        "tlsOptions": {
+            "rejectUnauthorized": false
+        }
+    },
+    "sendingEmail": {
+        "info":{
+            "from": "email@example.com", 
+            "to": "email@example.com",
+            "subject": "TEST", 
+            "text": "TEST", 
+            "html": "TEST"
+        },
+        "transporter": {
+            "host": "email@example.com",
+            "port": 587,
+            "secure": false, 
+            "auth": {
+                "user": "testAccount",
+                "pass": "PASSWORD"
+            }
+        }
+    }
+}
