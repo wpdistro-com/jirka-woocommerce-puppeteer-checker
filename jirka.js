@@ -1,14 +1,14 @@
 const puppeteer = require('puppeteer');
 const Imap = require('imap');
-//const nodemailer = require("nodemailer");
+const nodemailer = require("nodemailer");
 var fs = require('fs');
 var conf = JSON.parse(fs.readFileSync('config.json', 'utf8'));
 
 
-/*async function send_email_alert(){
+async function send_email_alert(){
     let transporter = nodemailer.createTransport(conf.sendingEmail.transporter);
     let info = await transporter.sendMail(conf.sendingEmail.info);
-}*/
+}
 
 function mailCheckingFunction() {
     var imap = new Imap(conf.emailToCheck);
@@ -27,6 +27,7 @@ function mailCheckingFunction() {
                     imap.end();
                 } else {
                     console.log("Test unsuccessful, no email was received");
+                    send_email_alert();
                     imap.end();
                 }
             });
